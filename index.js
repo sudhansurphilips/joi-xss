@@ -36,20 +36,35 @@ module.exports = function (type) {
   }
 
   return joi => ({
-    base: joi[type](),
-    name: type,
-    language: { xss: '{{msg}}' },
-    rules: [{
-      name: 'xss',
-      params: { args: joi.any().optional() },
+    //base: joi[type](),
+    // name: type,
+    base: joi.any(),
+    type: 'xss',
+    // language: { xss: '{{msg}}' },
+    rules: {
+      xss: {
+        validate: ({ args }, value, state, options) => {
+          console.log('--------------->type',type)
+          if (type === 'object' || type === 'array') {
+            deep(value, { whiteList: [], ...args });
+          } else {
+            value = xss(value, { whiteList: [], ...args });
+          }
+          return value;
+        }
+      }
+      /* name: 'xss',
+      // params: { args: joi.any().optional() },
       validate: ({ args }, value, state, options) => {
+        console.log('--------------->type',type)
         if (type === 'object' || type === 'array') {
           deep(value, { whiteList: [], ...args });
         } else {
           value = xss(value, { whiteList: [], ...args });
         }
         return value;
-      },
-    }],
+      }, */
+    },
   });
 };
+
