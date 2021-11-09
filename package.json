@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/normancarcamo/joi-xss#readme",
   "dependencies": {
-    "xss": "^1.0.3"
+    "xss": "^1.0.10"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.0",
